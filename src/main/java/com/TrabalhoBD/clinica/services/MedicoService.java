@@ -16,8 +16,8 @@ public class MedicoService {
     private MedicoRepository medicoRepository;
 
 
-    public Medico findById(String crm){
-        Optional<Medico> medico = this.medicoRepository.findById(crm);
+    public Medico findById(Long id){
+        Optional<Medico> medico = this.medicoRepository.findById(id);
 
         return medico.orElseThrow(() -> new RuntimeException("Médico não encontrado"));
     }
@@ -33,17 +33,18 @@ public class MedicoService {
     }
 
     public Medico updateMedico(Medico medico){
-        Medico newMedico = findById(medico.getCrm());
+        Medico newMedico = findById(medico.getId());
         newMedico.setNome(medico.getNome());
-        newMedico.setIdade(medico.getIdade());
+        newMedico.setCrm(medico.getCrm());
+        newMedico.setEspecialidade(medico.getEspecialidade());
         return this.medicoRepository.save(newMedico);
     }
 
-    public void deleteMedico(String crm){
-        findById(crm);
+    public void deleteMedico(Long id){
+        findById(id);
 
         try {
-            this.medicoRepository.deleteById(crm);
+            this.medicoRepository.deleteById(id);
         } catch (Exception e) {
             throw new RuntimeException("Não é possível excluir");
         }

@@ -24,9 +24,9 @@ public class MedicoController {
     @Autowired
     private MedicoService medicoService;
 
-    @GetMapping("/{crm}")
-    public ResponseEntity<Medico> findById(@PathVariable Long crm){
-        Medico medico = this.medicoService.findById(crm);
+    @GetMapping("/{id}")
+    public ResponseEntity<Medico> findById(@PathVariable Long id){
+        Medico medico = this.medicoService.findById(id);
         return ResponseEntity.ok().body(medico);
     } 
 
@@ -43,16 +43,16 @@ public class MedicoController {
         return ResponseEntity.created(null).build();
     }
 
-    @PutMapping("/{crm}")
-    public ResponseEntity<Void> updateMedico(@RequestBody Medico medico, @PathVariable Long crm){
-        medico.setCrm(crm);
+    @PutMapping("/{id}")
+    public ResponseEntity<Void> updateMedico(@RequestBody Medico medico, @PathVariable Long id){
+        medico.setId(id);
         medico = this.medicoService.updateMedico(medico);
         return ResponseEntity.noContent().build();
     }
 
-    @DeleteMapping("/{crm}")
-    public ResponseEntity<Void> deleteMedico(@PathVariable Long crm){
-        this.medicoService.deleteMedico(crm);
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteMedico(@PathVariable Long id){
+        this.medicoService.deleteMedico(id);
         return ResponseEntity.noContent().build();
     }
     

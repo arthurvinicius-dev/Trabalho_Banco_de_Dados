@@ -3,13 +3,14 @@ package com.TrabalhoBD.clinica.models;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
-//import jakarta.persistence.GenerationType;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.extern.java.Log;
 
 @Entity(name="medico")
 @Table(name="medicos")
@@ -21,7 +22,10 @@ import lombok.Setter;
 public class Medico {
 
     @Id
-    //@GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="id", unique = true)
+    private Long id;
+
     @Column(name="CRM", unique = true)
     private String crm;
 
@@ -29,7 +33,7 @@ public class Medico {
     private String nome;
 
     
-    @Column(name = "idade")
-    private Integer idade;
+    @Column(name = "especialidade")
+    private String especialidade;
     
 }
