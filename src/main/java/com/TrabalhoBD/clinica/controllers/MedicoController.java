@@ -1,5 +1,6 @@
 package com.TrabalhoBD.clinica.controllers;
 
+import java.net.URI;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.TrabalhoBD.clinica.models.Medico;
 import com.TrabalhoBD.clinica.services.MedicoService;
@@ -40,7 +42,10 @@ public class MedicoController {
     @PostMapping
     public ResponseEntity<Void> createMedico (@RequestBody Medico medico){
         this.medicoService.createMedico(medico);
-        return ResponseEntity.created(null).build();
+
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(medico.getId()).toUri();
+
+        return ResponseEntity.created(uri).build();
     }
 
     @PutMapping("/{id}")

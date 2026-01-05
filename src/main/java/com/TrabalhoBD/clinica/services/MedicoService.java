@@ -36,7 +36,6 @@ public class MedicoService {
         Medico newMedico = findById(medico.getId());
         newMedico.setNome(medico.getNome());
         newMedico.setCrm(medico.getCrm());
-        newMedico.setEspecialidade(medico.getEspecialidade());
         return this.medicoRepository.save(newMedico);
     }
 

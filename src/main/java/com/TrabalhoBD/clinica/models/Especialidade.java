@@ -13,37 +13,29 @@ import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.extern.java.Log;
 
-@Entity(name="medico")
-@Table(name="medicos")
+@Entity
+@Table(name = "especialidades")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode
 
-public class Medico {
-
+public class Especialidade {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="id", unique = true)
+    @Column(name = "id", unique = true)
     private Long id;
 
-    @Column(name="CRM", unique = true)
-    private String crm;
+    // CORRETO (Se o mapeamento principal estiver na classe Medico)
+    @ManyToMany(mappedBy = "especialidades") // "especialidades" deve ser o nome do atributo na classe Medico
+    private List<Medico> medicos = new ArrayList<Medico>();
 
-    @Column(name = "nome" , nullable = false, length = 250)
+    @Column(name = "nome")
     private String nome;
-
-    @ManyToMany
-    @JoinTable(
-    name = "especialidade_medico",
-    joinColumns = @JoinColumn(name = "especialidade_id"), 
-    inverseJoinColumns = @JoinColumn(name = "medico_id") 
-    )
-    private List<Especialidade> especialidades = new ArrayList<Especialidade>();
-    
 }
