@@ -29,15 +29,15 @@ public class Medico {
     private Long id;
 
     @Column(name="nome", unique = true)
-    @NotBlank(message = "Nome é obrigatório")
+    @NotBlank()
     private String nome;
 
     @Column(name = "crm" , nullable = false, length = 255)
-    @NotBlank(message = "CRM é obrigatório")
+    @NotBlank()
     private String crm;
 
     @Column(name = "especialidade" , nullable = false, length = 255)
-    @NotBlank(message = "Especialidade é obrigatório")
+    @NotBlank()
     private String especialidade;
     
 }
