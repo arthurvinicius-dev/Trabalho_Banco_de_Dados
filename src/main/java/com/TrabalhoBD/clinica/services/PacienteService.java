@@ -1,0 +1,65 @@
+package com.TrabalhoBD.clinica.services;
+
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.TrabalhoBD.clinica.exceptions.DataIntegrityViolationException;
+import com.TrabalhoBD.clinica.exceptions.NotFoundException;
+import com.TrabalhoBD.clinica.models.Paciente;
+import com.TrabalhoBD.clinica.repositories.PacienteRepository;
+
+import jakarta.transaction.Transactional;
+
+@Service
+public class PacienteService {
+
+    @Autowired
+    private PacienteRepository pacienteRepository;
+    
+    public Paciente findById(Long id){
+        Optional<Paciente> paciente = this.pacienteRepository.findById(id);
+        return paciente.orElseThrow( () -> new NotFoundException("Paciente de id = " + id + " não encontrado."));
+    }
+
+    public Paciente findByNome(String nome){
+        Optional<Paciente> paciente = this.pacienteRepository.findByNome(nome);
+        return paciente.orElseThrow( () -> new NotFoundException("Paciete de nome = " + nome + " não encontrado"));
+    }
+
+    public List<Paciente> findAll(){
+        List<Paciente> list = this.pacienteRepository.findAll();
+        if (list.isEmpty()){
+            throw new NotFoundException("Nenhum paciente encontrado");
+        }
+        return list;
+    }
+
+    @Transactional
+    public void createPaciente(Paciente paciente){
+        this.pacienteRepository.save(paciente);
+    }
+
+    @Transactional
+    public Paciente updatePaciente(Paciente paciente){
+        Paciente newPaciente = this.findById(paciente.getId());
+
+        newPaciente.setNome(paciente.getNome());
+        newPaciente.setCpf(paciente.getCpf());
+        newPaciente.setTelefone(paciente.getTelefone());
+        newPaciente.setEndereco(paciente.getEndereco());
+
+        return this.pacienteRepository.save(newPaciente);
+    }
+
+    public void deletePaciente(Long id){
+        findById(id);
+        try{
+            this.pacienteRepository.deleteById(id);
+        }catch (org.springframework.dao.DataIntegrityViolationException exception){
+            throw new com.TrabalhoBD.clinica.exceptions.DataIntegrityViolationException("Não é possível excluir, pois o paciente possui vinculações");
+        }
+    }
+}

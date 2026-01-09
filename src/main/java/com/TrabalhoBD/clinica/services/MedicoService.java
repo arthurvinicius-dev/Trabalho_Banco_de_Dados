@@ -21,7 +21,7 @@ public class MedicoService {
 
     public Medico findById(Long id){
         Optional<Medico> medico = this.medicoRepository.findById(id);
-        return medico.orElseThrow(() -> new NotFoundException("Médico não encontrado"));
+        return medico.orElseThrow(() -> new NotFoundException("Médico de id = " + id + "não encontrado"));
     }
 
     public Medico findByNome(String nome){
@@ -38,7 +38,6 @@ public class MedicoService {
 
     @Transactional
     public void createMedico(Medico medico){
-
         this.medicoRepository.save(medico);
     }
 
