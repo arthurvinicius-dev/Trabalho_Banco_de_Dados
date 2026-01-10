@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Agendamento de Consultas</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="container">
+  <a href="index.html" class="btn-home">⬅ Voltar ao Início</a>
+  <h1>Agendamento de Consultas</h1>
+
+  <div class="form-section">
+    <h2 id="form-title">Nova Consulta</h2>
+    <form id="consulta-form">
+      <input type="hidden" id="consulta-id">
+
+      <div style="display: flex; gap: 10px; margin-bottom: 10px;">
+        <select id="select-medico" required style="flex: 1; padding: 8px;">
+          <option value="">Selecione o Médico</option>
+        </select>
+        <select id="select-paciente" required style="flex: 1; padding: 8px;">
+          <option value="">Selecione o Paciente</option>
+        </select>
+      </div>
+
+      <div style="display: flex; gap: 10px; margin-bottom: 10px;">
+        <input type="text" id="data" placeholder="Data (Ex: 10/10/2025)" required style="flex: 1;">
+        <input type="text" id="horario" placeholder="Horário (Ex: 14:30)" required style="flex: 1;">
+      </div>
+
+      <input type="text" id="observacoes" placeholder="Observações" required style="width: 100%; box-sizing: border-box;">
+
+      <div style="margin-top: 15px;">
+        <button type="submit" id="btn-save">Agendar</button>
+        <button type="button" id="btn-cancel" style="display:none;" onclick="resetForm()">Cancelar</button>
+      </div>
+    </form>
+  </div>
+
+  <table>
+    <thead>
+    <tr>
+      <th>Data/Hora</th>
+      <th>Médico</th>
+      <th>Paciente</th>
+      <th>Obs</th>
+      <th>Ações</th>
+    </tr>
+    </thead>
+    <tbody id="consulta-table-body"></tbody>
+  </table>
+</div>
+<script src="consultaScript.js"></script>
+</body>
+</html>

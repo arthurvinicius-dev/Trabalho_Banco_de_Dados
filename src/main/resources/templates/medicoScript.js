@@ -8,7 +8,7 @@ async function listarTodos() {
     try {
         const response = await fetch(API_URL);
         if (!response.ok) throw new Error("Erro ao buscar dados");
-        
+
         const medicos = await response.json();
         renderizarTabela(medicos);
     } catch (error) {
@@ -105,7 +105,7 @@ function prepararEdicao(id, nome, crm, especialidade) {
     document.getElementById('nome').value = nome;
     document.getElementById('crm').value = crm;
     document.getElementById('especialidade').value = especialidade;
-    
+
     document.getElementById('form-title').innerText = "Editar Médico";
     document.getElementById('btn-cancel').style.display = "inline";
 }
