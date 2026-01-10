@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.TrabalhoBD.clinica.exceptions.NotFoundException;
+import com.TrabalhoBD.clinica.models.Consulta;
 import com.TrabalhoBD.clinica.models.Receita;
 import com.TrabalhoBD.clinica.repositories.ReceitaRepository;
 
@@ -34,8 +35,19 @@ public class ReceitaService {
         return list;
     }
 
+    public List<Receita> findAllByConsultaId(Long consultaId){
+        List<Receita> list = this.receitaRepository.findByConsulta_id(consultaId);
+        if (list.isEmpty()){
+            throw new NotFoundException("Nenhuma consulta encontrada");
+        }
+        return list;
+    }
+
     @Transactional
     public void create(Receita receita){
+        if (receita.getConsulta() != null && receita.getConsulta().getId() != null) {
+            receita.setData_emissao(receita.getConsulta().getData());
+        }
         this.receitaRepository.save(receita);
     }
 
@@ -43,11 +55,17 @@ public class ReceitaService {
     public Receita update(Receita receita){
         Receita newReceita = findById(receita.getId());
 
-        newReceita.setData_emissao(receita.getData_emissao());
         newReceita.setMedicamento(receita.getMedicamento());
         newReceita.setDosagem(receita.getDosagem());
         newReceita.setInstrucoes(receita.getInstrucoes());
 
+        if (receita.getData_emissao() == null){
+            newReceita.setData_emissao(receita.getData_emissao());
+        }
+
+        if (receita.getConsulta() != null && receita.getConsulta().getId() != null) {
+            newReceita.setConsulta(receita.getConsulta());
+        }
         return this.receitaRepository.save(newReceita);
     }
 

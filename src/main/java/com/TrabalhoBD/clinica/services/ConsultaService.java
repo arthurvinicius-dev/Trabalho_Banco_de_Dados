@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.TrabalhoBD.clinica.exceptions.NotFoundException;
 import com.TrabalhoBD.clinica.models.Consulta;
+import com.TrabalhoBD.clinica.models.Receita;
 import com.TrabalhoBD.clinica.repositories.ConsultaRepository;
 
 import org.springframework.transaction.annotation.Transactional;
@@ -54,6 +55,13 @@ public class ConsultaService {
 
     @Transactional
     public void createConsulta(Consulta consulta){
+        if (consulta.getReceitas() != null && !consulta.getReceitas().isEmpty()) {
+        for (Receita receita : consulta.getReceitas()) {
+            receita.setData_emissao(consulta.getData());
+            
+            receita.setConsulta(consulta);
+        }
+    }
         this.consultaRepository.save(consulta);
     }
 
@@ -64,6 +72,10 @@ public class ConsultaService {
         newConsulta.setData(consulta.getData());
         newConsulta.setHorario(consulta.getHorario());
         newConsulta.setObservacoes(consulta.getObservacoes());
+
+        if (newConsulta.getReceitas() != null) {
+            newConsulta.getReceitas().forEach(r -> r.setData_emissao(newConsulta.getData()));
+        }
 
         return this.consultaRepository.save(newConsulta);
     }

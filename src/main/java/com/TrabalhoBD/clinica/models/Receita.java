@@ -5,6 +5,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
@@ -27,7 +29,6 @@ public class Receita {
     private Long id;
 
     @Column(name ="data_emissão", nullable = false, length = 255)
-    @NotBlank
     private String data_emissao;
 
     @Column(name = "medicamento", nullable = false, length = 255)
@@ -42,4 +43,7 @@ public class Receita {
     @NotBlank
     private String instrucoes;
 
+    @ManyToOne
+    @JoinColumn(name = "consulta_id", nullable = false)
+    private Consulta consulta;
 }
