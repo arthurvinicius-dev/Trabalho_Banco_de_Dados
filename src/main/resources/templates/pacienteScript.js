@@ -61,6 +61,7 @@ function renderizarTabela(pacientes) {
                 <td>${p.nome}</td>
                 <td>${p.cpf}</td>
                 <td>${p.telefone}</td>
+                <td>${p.endereco}</td>
                 <td>
                     <button class="btn-edit" onclick="prepararEdicao(${p.id}, '${p.nome}', '${p.cpf}', '${p.dataNascimento}', '${p.telefone}', '${p.endereco}')">Editar</button>
                     <button class="btn-delete" onclick="excluirPaciente(${p.id})">Excluir</button>
